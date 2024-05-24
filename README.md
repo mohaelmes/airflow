@@ -5,7 +5,56 @@ Configuración de Apache Airflow con Docker
 
 *1. docker-compose.yml*  
 
-Este archivo contiene la configuración para Docker Compose, incluyendo la imagen de Airflow, el puerto de acceso y la carpeta de DAGs.  
+Este archivo contiene la configuración para Docker Compose, incluyendo la imagen de Airflow, el puerto de acceso y la carpeta de DAGs.    
+```bash
+
+## Archivos del proyecto
+
+### 1. `docker-compose.yml`
+
+Este archivo contiene la configuración para Docker Compose, incluyendo la imagen de Airflow, el puerto de acceso y la carpeta de DAGs.
+
+```yaml
+version: '3.7'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+
+  webserver:
+    image: apache/airflow:2.3.0
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    volumes:
+      - ./dags:/opt/airflow/dags
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  scheduler:
+    image: apache/airflow:2.3.0
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    volumes:
+      - ./dags:/opt/airflow/dags
+    command: scheduler
+```
 
 *2. Dockerfile*  
 
