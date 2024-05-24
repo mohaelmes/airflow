@@ -1,2 +1,2 @@
-FROM apache/airflow:2.3.0
+FROM apache/airflow:latest
 COPY ./dags /opt/airflow/dags
