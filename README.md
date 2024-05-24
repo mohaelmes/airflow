@@ -9,11 +9,16 @@ Este archivo contiene la configuración para Docker Compose, incluyendo la image
 
 *2. Dockerfile*  
 
-Este archivo define cómo construir la imagen personalizada de Airflow, incluyendo la copia de los DAGs.  
+Este archivo define cómo construir la imagen personalizada de Airflow, incluyendo la copia de los DAGs.    
+
+![image](https://github.com/mohaelmes/airflow/assets/158450254/7cc4a8a8-8e1a-4bcc-9c03-19f03ec8ac07)
+
 
 *3. dags/prueba.py*  
 
-Este archivo contiene un DAG de prueba que incluye una tarea dummy que no hace nada, solo sirve como prueba.
+Este archivo contiene un DAG de prueba que incluye una tarea dummy que no hace nada, solo sirve como prueba.  
+
+![image](https://github.com/mohaelmes/airflow/assets/158450254/0b7a97e2-5787-4b65-bdb6-ce2b6cec9d59)
 
 
 # Pasos para ejecutar el proyecto
